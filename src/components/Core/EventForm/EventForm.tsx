@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button'
 import { useTranslation } from 'react-i18next'
+import isValidDate from 'date-fns/isValid'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as Yup from 'yup'
@@ -86,6 +87,16 @@ export const EventForm = () => {
     setFieldValue('image', await readFileAsDataURL(event))
   }, [])
 
+  const onChangeDate = React.useCallback((handleChange) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const date = new Date(event.target.value)
+
+    if (!isValidDate(date)) {
+      return
+    }
+
+    handleChange(event)
+  }, [])
+
   return (
     <Styled.EventForm>
       <Styled.EventFormTitle>{t(i18nKeys.EventFormTitle)}</Styled.EventFormTitle>
@@ -151,7 +162,7 @@ export const EventForm = () => {
                         InputLabelProps={{
                           shrink: true,
                         }}
-                        onChange={(props) => { handleChange(props) }}
+                        onChange={onChangeDate(handleChange)}
                         onBlur={handleBlur}
                       />}
                       label={translate.date}

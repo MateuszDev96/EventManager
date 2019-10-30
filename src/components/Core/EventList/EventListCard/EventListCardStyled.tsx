@@ -38,7 +38,7 @@ export const EventListCardContent = styled(Box).attrs({
   && {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 `
 
